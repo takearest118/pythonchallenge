@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import Image
 import urllib2
 import re
 import bz2
 import StringIO
 
 from BeautifulSoup import BeautifulSoup
+from PIL import Image
+from PIL import ImageDraw
 
 def answer1():
 	url = "http://www.pythonchallenge.com/pc/return/good.html"
@@ -24,8 +25,15 @@ def answer1():
 	jpg = Image.open(StringIO.StringIO(raw))
 	print jpg
 	print jpg.size
-	print dir(jpg)
-	jpg.show()
+	print jpg.__class__
+	print jpg.mode
+
+	img = Image.new(jpg.mode, jpg.size)
+	draw = ImageDraw.Draw(img)
+	draw.line(first, 'green', 2)
+	draw.line(second, 'red', 1)
+	img.show()
+	
 
 def _request_auth(url, username, password):
 	p = urllib2.HTTPPasswordMgrWithDefaultRealm()
